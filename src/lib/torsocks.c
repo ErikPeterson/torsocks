@@ -382,6 +382,9 @@ int tsocks_tor_resolve(int af, const char *hostname, void *ip_addr)
 	} else if (af == AF_INET6) {
 		addr_len = 16;
 		conn.dest_addr.domain = CONNECTION_DOMAIN_INET6;
+		/* Tor daemon does not support IPv6 DNS resolution yet. */
+		ret = -ENOSYS;
+		goto error;
 	} else {
 		ret = -EINVAL;
 		goto error;
